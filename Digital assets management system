@@ -1,0 +1,82 @@
+class DigitalAssetManager:
+    def __init__(self):
+        # Store assets in a list of dictionaries with 'name' and 'metadata'
+        self.assets = []
+
+    def add_asset(self, asset_name, metadata):
+        asset = {'name': asset_name, 'metadata': metadata, 'usage': 0}
+        self.assets.append(asset)
+        print(f"Asset '{asset_name}' added with metadata: {metadata}.")
+
+    def view_assets(self):
+        if not self.assets:
+            print("No assets available.")
+            return
+        print("Digital Assets:")
+        for index, asset in enumerate(self.assets, start=1):
+            print(f"{index}. Name: {asset['name']}, Metadata: {asset['metadata']}, Usage: {asset['usage']}")
+
+    def delete_asset(self, asset_name):
+        for asset in self.assets:
+            if asset['name'] == asset_name:
+                self.assets.remove(asset)
+                print(f"Asset '{asset_name}' deleted.")
+                return
+        print(f"Asset '{asset_name}' not found.")
+
+    def find_similar_assets(self, asset_name):
+        for asset in self.assets:
+            if asset['name'] == asset_name:
+                # Just for simplicity, we'll find assets with the same metadata
+                print(f"Finding similar assets for '{asset_name}'...")
+                for other_asset in self.assets:
+                    if other_asset != asset and other_asset['metadata'] == asset['metadata']:
+                        print(f"Similar asset found: {other_asset['name']}")
+                return
+        print(f"Asset '{asset_name}' not found.")
+
+    def audit_asset_usage(self, asset_name):
+        for asset in self.assets:
+            if asset['name'] == asset_name:
+                asset['usage'] += 1
+                print(f"Asset '{asset_name}' usage incremented. Current usage: {asset['usage']}")
+                return
+        print(f"Asset '{asset_name}' not found.")
+
+def main():
+    manager = DigitalAssetManager()
+
+    while True:
+        print("\nDigital Asset Management")
+        print("1. Add Asset")
+        print("2. View Assets")
+        print("3. Delete Asset")
+        print("4. Find Similar Assets")
+        print("5. Audit Asset Usage")
+        print("6. Exit")
+
+        choice = input("Enter your choice (1-6): ")
+
+        if choice == '1':
+            asset_name = input("Enter asset name: ")
+            metadata = input("Enter asset metadata: ")
+            manager.add_asset(asset_name, metadata)
+        elif choice == '2':
+            manager.view_assets()
+        elif choice == '3':
+            asset_name = input("Enter asset name to delete: ")
+            manager.delete_asset(asset_name)
+        elif choice == '4':
+            asset_name = input("Enter asset name to find similar: ")
+            manager.find_similar_assets(asset_name)
+        elif choice == '5':
+            asset_name = input("Enter asset name to audit usage: ")
+            manager.audit_asset_usage(asset_name)
+        elif choice == '6':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
